@@ -1,3 +1,11 @@
 .bg-aqua{
     background-color: aqua;
 }
+.product-cart{
+    border: 2px solid darkolivegreen;
+    padding: 10px;
+    margin: 10px;
+}
+.products{
+    display: flex;
+}
