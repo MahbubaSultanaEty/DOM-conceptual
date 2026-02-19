@@ -63,7 +63,7 @@ buttons.forEach(button => {
     button.addEventListener('click', function(event){
         const card = event.target.closest('.product-cart');
         console.log(card);
-        event.target.closest('.product-cart')// closest(selector) DOM method। এটা current element থেকে উপরের দিকে traverse করে সবচেয়ে কাছের matching parent খুঁজে বের করে। .product-cart হলো ধরো, product card div-এর class। অর্থাৎ, তুমি button-এর click থেকে সেই button যে card-এর ভিতরে আছে তা খুঁজছো।
+        // event.target.closest('.product-cart') // closest(selector) DOM method। এটা current element থেকে উপরের দিকে traverse করে সবচেয়ে কাছের matching parent খুঁজে বের করে। .product-cart হলো ধরো, product card div-এর class। অর্থাৎ, তুমি button-এর click থেকে সেই button যে card-এর ভিতরে আছে তা খুঁজছো।
 
         const productName = card.querySelector(".product-name").textContent;
         const productprice = parseInt(card.querySelector(".product-price").textContent);
@@ -77,7 +77,7 @@ buttons.forEach(button => {
             catagory: productCatagory,
             quantity : 1
         }
-
+        // console.log(product);
         addToCart(product);
     })
 })
@@ -101,16 +101,17 @@ function updateCart() {
     cartItemDiv.innerHTML = "";
     let totalItem = 0;
     let totalPrice = 0;
-    cart.forEach(item => {
-        totalPrice += (item.price * item.quantity);
-        totalItem += item.quantity
-        
+    cart.forEach(product => {
         const div = document.createElement("div");
         div.innerHTML = `
-        ${item.name} (* ${item.quantity})- $ ${item.price * item.quantity}
+        ${product.name} (* ${product.quantity})- $ ${product.price * product.quantity}
         <button>Remove</button>
         `
-        cartItemDiv.appendChild(div)
+        cartItemDiv.appendChild(div);
+
+        totalItem += product.quantity;
+        totalPrice += (product.price * product.quantity);
+      
     });
     cartCount.innerText = totalItem;
     cartPrice.innerText = totalPrice;
