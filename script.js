@@ -60,10 +60,10 @@ const buttons = document.querySelectorAll(".add-to-cart-btn");
 
  let cart=[]
 buttons.forEach(button => {
-    button.addEventListener('click', function(e){
-        const card = e.target.closest('.product-cart');
+    button.addEventListener('click', function(event){
+        const card = event.target.closest('.product-cart');
         console.log(card);
-        e.target.closest('.product-cart')// closest(selector) DOM method। এটা current element থেকে উপরের দিকে traverse করে সবচেয়ে কাছের matching parent খুঁজে বের করে। .product-cart হলো ধরো, product card div-এর class। অর্থাৎ, তুমি button-এর click থেকে সেই button যে card-এর ভিতরে আছে তা খুঁজছো।
+        event.target.closest('.product-cart')// closest(selector) DOM method। এটা current element থেকে উপরের দিকে traverse করে সবচেয়ে কাছের matching parent খুঁজে বের করে। .product-cart হলো ধরো, product card div-এর class। অর্থাৎ, তুমি button-এর click থেকে সেই button যে card-এর ভিতরে আছে তা খুঁজছো।
 
         const productName = card.querySelector(".product-name").textContent;
         const productprice = parseInt(card.querySelector(".product-price").textContent);
@@ -89,15 +89,30 @@ function addToCart(product) {
     } else {
         cart.push(product);
     }
-    console.log(cart);
+    // console.log(cart);
+    updateCart()
 }
 
-const cartItemDiv= document.getElementById("cart-div")
+const cartItemDiv = document.getElementById("cart-div");
+const cartCount = document.getElementById("cartCount");
+const cartPrice= document.getElementById("totalPrice")
+
 function updateCart() {
     cartItemDiv.innerHTML = "";
     let totalItem = 0;
     let totalPrice = 0;
     cart.forEach(item => {
-
-    })
-}
+        totalPrice += (item.price * item.quantity);
+        totalItem += item.quantity
+        
+        const div = document.createElement("div");
+        div.innerHTML = `
+        ${item.name} (* ${item.quantity})- $ ${item.price * item.quantity}
+        <button>Remove</button>
+        `
+        cartItemDiv.appendChild(div)
+    });
+    cartCount.innerText = totalItem;
+    cartPrice.innerText = totalPrice;
+    
+};
